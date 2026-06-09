@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+*.db
+
+# Foundry
+backend/contracts/lib/
+backend/contracts/out/
+backend/contracts/cache/
+backend/contracts/foundry.toml
+backend/contracts/foundry.lock
+
+# Build artifacts
+frontend/.next/
+frontend/out/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# OS
+.DS_Store
+*.log
