@@ -1,14 +1,16 @@
 'use client';
 
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
-import { RotateCw, Wallet } from 'lucide-react';
+import { RotateCw, Wallet, Menu, X, TrendingUp } from 'lucide-react';
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function Navbar() {
   const { address, isConnected, isConnecting } = useAccount();
   const { connect, connectors, isPending } = useConnect();
   const { disconnect } = useDisconnect();
   const [showMenu, setShowMenu] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const truncatedAddress = address
     ? `${address.slice(0, 6)}...${address.slice(-4)}`
@@ -18,14 +20,36 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-dark-2">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
-        <a href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-base flex items-center justify-center">
+        <Link href="/" className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-lg gradient-accent flex items-center justify-center">
             <span className="text-white font-bold text-sm">B</span>
           </div>
           <span className="text-white font-bold text-lg tracking-tight">
             Base<span className="text-base">Kit</span>
           </span>
-        </a>
+        </Link>
+
+        {/* Desktop Nav Links */}
+        <div className="hidden md:flex items-center gap-1">
+          <Link
+            href="/#recent"
+            className="px-3 py-2 text-sm text-gray-400 hover:text-white rounded-lg hover:bg-dark-2 transition-colors"
+          >
+            Tokens
+          </Link>
+          <Link
+            href="/#launch"
+            className="px-3 py-2 text-sm text-gray-400 hover:text-white rounded-lg hover:bg-dark-2 transition-colors"
+          >
+            Launch
+          </Link>
+          <Link
+            href="/#how-it-works"
+            className="px-3 py-2 text-sm text-gray-400 hover:text-white rounded-lg hover:bg-dark-2 transition-colors"
+          >
+            How It Works
+          </Link>
+        </div>
 
         {/* Right side */}
         <div className="flex items-center gap-3">
@@ -45,6 +69,13 @@ export default function Navbar() {
                     <p className="text-xs text-gray-400">Connected</p>
                     <p className="font-mono text-sm truncate">{address}</p>
                   </div>
+                  <Link
+                    href="/#launch"
+                    onClick={() => setShowMenu(false)}
+                    className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-dark-2 text-gray-300"
+                  >
+                    <TrendingUp size={14} /> Launch Token
+                  </Link>
                   <button
                     onClick={() => { disconnect(); setShowMenu(false); }}
                     className="w-full text-left px-3 py-2 text-sm hover:bg-dark-2 text-error"
@@ -71,8 +102,45 @@ export default function Navbar() {
               {isConnecting || isPending ? 'Connecting...' : 'Connect Wallet'}
             </button>
           )}
+
+          {/* Mobile menu toggle */}
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="md:hidden p-2 text-gray-400 hover:text-white"
+          >
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div className="md:hidden border-t border-dark-2 bg-dark-1">
+          <div className="px-4 py-3 space-y-1">
+            <Link
+              href="/#recent"
+              onClick={() => setMobileOpen(false)}
+              className="block px-3 py-2 text-sm text-gray-400 hover:text-white hover:bg-dark-2 rounded-lg"
+            >
+              Tokens
+            </Link>
+            <Link
+              href="/#launch"
+              onClick={() => setMobileOpen(false)}
+              className="block px-3 py-2 text-sm text-gray-400 hover:text-white hover:bg-dark-2 rounded-lg"
+            >
+              Launch
+            </Link>
+            <Link
+              href="/#how-it-works"
+              onClick={() => setMobileOpen(false)}
+              className="block px-3 py-2 text-sm text-gray-400 hover:text-white hover:bg-dark-2 rounded-lg"
+            >
+              How It Works
+            </Link>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { ExternalLink, Copy, RefreshCw, Loader2 } from 'lucide-react';
+import Link from 'next/link';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
@@ -16,6 +17,7 @@ interface Token {
   block_number: number;
   created_at: number;
   description?: string;
+  logo?: string;
 }
 
 function timeAgo(timestamp: number): string {
@@ -116,13 +118,22 @@ export default function RecentTokens() {
                 </thead>
                 <tbody>
                   {tokens.map((token, i) => (
-                    <tr key={token.id} className={`table-row ${i !== tokens.length - 1 ? 'border-b border-dark-2' : ''}`}>
-                      <td className="px-4 py-3">
+                  <tr key={token.id} className={`table-row ${i !== tokens.length - 1 ? 'border-b border-dark-2' : ''}`}>
+                    <td className="px-4 py-3">
+                      <Link href={`/token/${token.contract_address}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                        {token.logo ? (
+                          <img src={token.logo} alt={token.name} className="w-8 h-8 rounded-full object-cover" />
+                        ) : (
+                          <div className="w-8 h-8 rounded-full gradient-accent flex items-center justify-center shrink-0">
+                            <span className="text-white font-bold text-xs">{token.symbol.slice(0, 2)}</span>
+                          </div>
+                        )}
                         <div>
-                          <p className="font-medium text-sm">{token.name}</p>
+                          <p className="font-medium text-sm text-white">{token.name}</p>
                           <p className="text-xs text-gray-400">{token.symbol}</p>
                         </div>
-                      </td>
+                      </Link>
+                    </td>
                       <td className="px-4 py-3 hidden md:table-cell">
                         <span className="text-sm font-mono">{formatSupply(token.supply)}</span>
                       </td>

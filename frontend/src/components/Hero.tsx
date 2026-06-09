@@ -15,7 +15,7 @@ export default function Hero() {
         {/* Headline */}
         <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-6 animate-fade-in">
           Launch your token on{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-base to-blue-400">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B00] to-[#FF8533]">
             Base
           </span>{' '}
           <br />in 60 seconds

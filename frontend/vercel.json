@@ -1,0 +1,4 @@
+{
+  "buildCommand": "echo 'using-prebuilt' && exit 0",
+  "outputDirectory": ".next"
+}
