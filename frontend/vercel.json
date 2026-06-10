@@ -1,4 +1,6 @@
 {
-  "buildCommand": "echo 'using-prebuilt' && exit 0",
-  "outputDirectory": ".next"
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "installCommand": "echo 'skipping install'",
+  "framework": null
 }
